@@ -1,8 +1,8 @@
 :root {
     --ink: #1f2937;
     --muted: #6b7280;
-    --brand: #7a2035;
-    --brand-dark: #5c1727;
+    --brand: #1a2035;
+    --brand-dark: #9c1727;
     --bg: #f8f5f2;
     --card: #ffffff;
     --line: #e5ded8;
@@ -27,7 +27,7 @@ body {
 
 .hero {
     background: linear-gradient(135deg, var(--brand), var(--brand-dark));
-    color: #fff;
+    color: #000;
     padding: 72px 0 64px;
 }
 
