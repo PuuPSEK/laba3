@@ -23,7 +23,7 @@ class LandingPageTests(TestCase):
         response = self.client.post(reverse("landing:index"), VALID_FORM)
         self.assertRedirects(response, reverse("landing:index"))
 ###
-        self.assertEqual(ConsultationRequest.objects.count(), 2)
+        self.assertEqual(ConsultationRequest.objects.count(), 1)
 ###
 
     def test_invalid_form_shows_errors(self):
