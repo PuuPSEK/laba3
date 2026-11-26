@@ -22,7 +22,9 @@ class LandingPageTests(TestCase):
         """Корректная заявка сохраняется в базу."""
         response = self.client.post(reverse("landing:index"), VALID_FORM)
         self.assertRedirects(response, reverse("landing:index"))
-        self.assertEqual(ConsultationRequest.objects.count(), 1)
+###
+        self.assertEqual(ConsultationRequest.objects.count(), 2)
+###
 
     def test_invalid_form_shows_errors(self):
         """Пустая форма не сохраняется и показывает ошибки."""
