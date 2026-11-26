@@ -1,0 +1,125 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Технологии внедрения ПО — курс</title>
+    <link rel="stylesheet" href="{% static 'landing/style.css' %}">
+</head>
+<body>
+<header class="hero">
+    <div class="wrap">
+        <span class="badge">СФУ · ИКИТ · 2026</span>
+        <h1>Технологии внедрения программного обеспечения</h1>
+        <p class="lead">
+            Одностраничный проект курса: программа, лабораторные работы
+            и форма обратной связи с преподавателем.
+        </p>
+        <a class="button" href="#labs">Лабораторные работы</a>
+        <a class="button ghost" href="#contacts">Оставить заявку</a>
+    </div>
+</header>
+
+<main class="wrap">
+    <section id="about" class="section">
+        <h2>О курсе</h2>
+        <p>
+            Курс посвящён полному циклу внедрения программного обеспечения:
+            от постановки требований и проектирования до тестирования,
+            контейнеризации и автоматической поставки на продуктовый сервер.
+        </p>
+        <div class="stats">
+            <div class="stat"><strong>5</strong><span>лабораторных работ</span></div>
+            <div class="stat"><strong>16</strong><span>недель курса</span></div>
+            <div class="stat"><strong>{{ total }}</strong><span>заявок оставлено</span></div>
+        </div>
+    </section>
+
+    <section id="labs" class="section">
+        <h2>Лабораторные работы</h2>
+        <div class="cards">
+            <article class="card">
+                <h3>ПР 1. Настройка окружения</h3>
+                <p>Виртуальные окружения, pip, conda, воспроизводимость зависимостей.</p>
+            </article>
+            <article class="card">
+                <h3>ПР 2. Система контроля версий</h3>
+                <p>Git, ветки, слияния, конфликты, работа с удалённым репозиторием.</p>
+            </article>
+            <article class="card">
+                <h3>ПР 3. CI/CD</h3>
+                <p>GitHub Actions, линтер, тесты и автодеплой на продуктовый контур.</p>
+            </article>
+            <article class="card">
+                <h3>ПР 4. Docker</h3>
+                <p>Сборка образа, тома, запуск сервисов в контейнерах.</p>
+            </article>
+            <article class="card">
+                <h3>ПР 5. Kubernetes</h3>
+                <p>Поды, ConfigMap, namespace и запуск приложений в кластере.</p>
+            </article>
+        </div>
+    </section>
+
+    <section id="contacts" class="section">
+        <h2>Связаться с преподавателем</h2>
+        <p class="muted">Заполните форму — заявка сохранится в базе и появится у администратора.</p>
+
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="message {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <form method="post" class="form" novalidate>
+            {% csrf_token %}
+            <label>
+                Имя
+                <input type="text" name="name" value="{{ form.name|default:'' }}" placeholder="Иван Иванов">
+                {% if errors.name %}<span class="error">{{ errors.name }}</span>{% endif %}
+            </label>
+            <label>
+                Электронная почта
+                <input type="email" name="email" value="{{ form.email|default:'' }}" placeholder="student@sfu-kras.ru">
+                {% if errors.email %}<span class="error">{{ errors.email }}</span>{% endif %}
+            </label>
+            <label>
+                Тема
+                <input type="text" name="topic" value="{{ form.topic|default:'' }}" placeholder="Вопрос по лабораторной работе">
+                {% if errors.topic %}<span class="error">{{ errors.topic }}</span>{% endif %}
+            </label>
+            <label>
+                Сообщение
+                <textarea name="message" rows="5" placeholder="Опишите вопрос">{{ form.message|default:'' }}</textarea>
+                {% if errors.message %}<span class="error">{{ errors.message }}</span>{% endif %}
+            </label>
+            <button type="submit" class="button">Отправить заявку</button>
+        </form>
+
+        {% if requests %}
+        <div class="recent">
+            <h3>Последние заявки</h3>
+            <ul>
+                {% for item in requests %}
+                <li>
+                    <strong>{{ item.name }}</strong> — {{ item.topic }}
+                    <span class="date">{{ item.created_at|date:"d.m.Y H:i" }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="wrap">
+        <p>Сибирский федеральный университет · Институт космических и информационных технологий</p>
+        <p>Красноярск, 2026</p>
+    </div>
+</footer>
+</body>
+</html>
